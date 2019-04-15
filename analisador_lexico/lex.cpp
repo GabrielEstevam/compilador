@@ -14,7 +14,7 @@ using namespace std;
 // Global Variables
 
 // Functions Definitions
-void readFile (string f); // read file and process char by char
+vector <char> readFile (string file); // read file and process char by char
 string machine (string state, char c, string chain, int row, int column); // process caracter and return the next state
 int token(string chain); // Return token Id
 bool isLetter(char c); // a..z, A..Z
@@ -34,56 +34,66 @@ int main(int argc, char *argv[]) {
 	cout << "File: " << file << endl; 
 
 	// Files Variables
-	ifstream ffile (file);
-	char c;
-	string line;
+	vector <char> entry = readFile(file);
 
 	// Machine Variables
 	string state = "q0", chain = "";	
 	int row, column = row = 0;
 	int bRow, bColumn; //before row and column
 
-	if (ffile.is_open()) {
-		while (getline(ffile, line)) {
-			for (int i = 0; i < line.size(); i++) {
-				c = line[i];
-				cout << "state, chain, c: " << state << ", " << chain << ", " << c << endl;
-				state = machine(state, c, chain, row, column);
+	int ptrChar = 0;
 
-				if (state == "q0") {
-					chain = "";
-					chain += c;
-					c = 0;
-					if (chain == ";") {
-						cout << "oi" << endl;
-						cout << "state, chain, c:1 " << state << ", " << chain << ", " << c << endl;
-						state = machine(state, c, chain, row, column);
-					}
-					chain = "";
-				}
-				
-				if (state == "qErr")
-					state = "";
-				if (c != 0)
-					chain = chain + c;
-				column++;
-			} 
+	while (ptrChar < entry.size()){
+		if (entry[ptrChar] == 13) {
 			bRow = row;
 			bColumn = column;
 			row++;
 			column = 0;
 		}
-		// Virtual EOF
-		state = machine(state, 0, chain, bRow, bColumn);
 
-		ffile.close();
+		//cout << "state, chain, c: " << state << ", " << chain << ", " << entry[ptrChar] << endl;
+		state = machine(state, entry[ptrChar], chain, row, column);
+
+		if (state == "q0") {
+			chain = "";
+			chain += entry[ptrChar];
+			entry[ptrChar] = 0;
+			if (chain == ";") {
+				//cout << "oi" << endl;
+				//cout << "state, chain, c:1 " << state << ", " << chain << ", " << entry[ptrChar] << endl;
+				state = machine(state, entry[ptrChar], chain, row, column);
+			}
+			chain = "";
+		}
+		
+		if (state == "qErr")
+			state = "";
+		if (entry[ptrChar] != 0)
+			chain = chain + entry[ptrChar];
+		
+		ptrChar++;
 	}
+	// Virtual EOF
+	state = machine(state, 0, chain, bRow, bColumn);
 
     return 0;
 }
 
-void readFile(string f) {
-	
+vector <char> readFile(string file) {
+	ifstream ffile (file);
+	char c;
+	string line;
+	vector <char> result;
+
+	if (ffile.is_open()) {
+		while (getline(ffile, line)) {
+			for (int i = 0; i < line.size(); i++) {
+				result.push_back(line[i]);
+			}
+		}
+		ffile.close();
+	}
+	return result;
 }
 
 string machine (string state, char c, string chain, int row, int column) {
