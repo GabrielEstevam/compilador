@@ -12,7 +12,6 @@
 using namespace std;
 
 // Global Variables
-static map<string,int> mapState;
 
 // Functions Definitions
 void readFile (string f); // read file and process char by char
@@ -33,25 +32,6 @@ int main(int argc, char *argv[]) {
 	string file = argv[1];
 
 	cout << "File: " << file << endl; 
-	
-	vector <string> s = {"q0", 
-						 "q1", "q11", 
-						 "q2", "q21", "q22", "q221",
-						 "q3", 
-						 "q4", "q41", "q42",
-						 "q5", "q51",
-						 "q6", "q61", "q62", "q63",
-						 "q7", "q71", "q72", "q73",
-						 "q8", "q81", "q82",
-						 "q9", "q91", "q92",
-						 "qA",
-						 "qB","qB1","qB11", "qB111", "qB2", 
-						 "qC","qC1","qC2", "qC21",
-						 "qD","qD1",
-						 "qE"};
-
-	for (int i = 0; i < s.size(); i++)
-		mapState[s[i]] = i;
 
 	// Files Variables
 	ifstream ffile (file);
@@ -108,14 +88,14 @@ void readFile(string f) {
 
 string machine (string state, char c, string chain, int row, int column) {
 
-	if (mapState[state] == mapState["q0"]) {
+	if (state == "q0") {
 		if (isLetter(c)) {
 			return "q1";
 		} else if (isSpecial(c) or c == 0) {
 			cout << "<" << token(chain) << ", " << chain << ">" << endl;
 			return "q0";
 		}
-	} else if (mapState[state] == mapState["q1"]) {
+	} else if (state == "q1") {
 		if (isLetter(c) or isDigit(c)) {
 			return "q1";
 		} else if (isFinal(c)) {
@@ -125,9 +105,6 @@ string machine (string state, char c, string chain, int row, int column) {
 			cout << "ERRO <l: " << row << ", c: " << column << ">: caracter nao esperado no contexto" << endl;
 			return "q0";
 		}
-	} else if (mapState[state] == mapState["q11"]) {
-		
-		return "q0";
 	}
 
 	return "q0";
