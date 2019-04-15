@@ -11,9 +11,6 @@
 
 using namespace std;
 
-void exampleDict ();
-void exampleSet ();
-
 // Global Variables
 static map<string,int> mapState;
 
@@ -102,53 +99,7 @@ int main(int argc, char *argv[]) {
 		ffile.close();
 	}
 
-	/*string a = "ab1";
-	char d = 'c';
-	string b = a + d;
-	cout << "APPEND: "<< b <<endl;*/
-
-    //exampleDict();
-    //exampleSet();
-    //readFile(file);
-
     return 0;
-}
-
-void exampleDict () {
-    // To create a dict for string to int
-    map <string, int> dict;
-    // To insert/update in dict directly
-    dict["ha"] = 1;
-    dict["he"] = 2;
-    dict["hi"] = 3;
-    // To query the dict size
-    cout << dict.size() << endl;
-    // To query in dict directly
-    cout << dict["ha"] << endl;
-    // To search in dict indirectly
-    map <string, int>::iterator it = dict.begin();
-    while(it != dict.end()){
-        cout << "<" << it->first << ", " << it->second << ">" << endl; 
-        it++;
-    }
-}
-
-void exampleSet () {
-    // To create a set for strings
-    set <string> conj;
-    // To insert in set
-    conj.insert("ha");
-    conj.insert("he");
-    conj.insert("hi");
-    // To search in set indirectly
-    set <string>::iterator it = conj.begin();
-    while(it != conj.end()){
-        cout << *it << endl; 
-        it++;
-    }
-    // To search in set directly
-    bool is_in = conj.find("ho") != conj.end();
-    cout << is_in << endl;
 }
 
 void readFile(string f) {
