@@ -11,12 +11,19 @@
 
 using namespace std;
 
+struct token {
+	int id, line, column;
+	string content;
+};
+
 // Global Variables
 
 // Functions Definitions
 vector <char> readFile (string file); // read file and process char by char
-string machine (string state, char c, string chain, int row, int column); // process caracter and return the next state
-int token(string chain); // Return token Id
+vector <token> lexicalAnalysis(vector <char> entry); // execute the lexical analysis
+string machine (string state, char c, string chain, int line, int column, vector<token> *ptrResult); // process caracter and return the next state
+token newToken (int id, string content, int line, int column); // build a new token
+int tokenRecognizer(string chain); // Return token Id
 bool isLetter(char c); // a..z, A..Z
 bool isDigit(char c);  // 0..9
 bool isFinal(char c); // space \n ; EOF
@@ -36,45 +43,10 @@ int main(int argc, char *argv[]) {
 	// Files Variables
 	vector <char> entry = readFile(file);
 
-	// Machine Variables
-	string state = "q0", chain = "";	
-	int row, column = row = 0;
-	int bRow, bColumn; //before row and column
+	vector <token> tk = lexicalAnalysis(entry);
 
-	int ptrChar = 0;
-
-	while (ptrChar < entry.size()){
-		if (entry[ptrChar] == 13) {
-			bRow = row;
-			bColumn = column;
-			row++;
-			column = 0;
-		}
-
-		//cout << "state, chain, c: " << state << ", " << chain << ", " << entry[ptrChar] << endl;
-		state = machine(state, entry[ptrChar], chain, row, column);
-
-		if (state == "q0") {
-			chain = "";
-			chain += entry[ptrChar];
-			entry[ptrChar] = 0;
-			if (chain == ";") {
-				//cout << "oi" << endl;
-				//cout << "state, chain, c:1 " << state << ", " << chain << ", " << entry[ptrChar] << endl;
-				state = machine(state, entry[ptrChar], chain, row, column);
-			}
-			chain = "";
-		}
-		
-		if (state == "qErr")
-			state = "";
-		if (entry[ptrChar] != 0)
-			chain = chain + entry[ptrChar];
-		
-		ptrChar++;
-	}
-	// Virtual EOF
-	state = machine(state, 0, chain, bRow, bColumn);
+	for (int i = 0; i < tk.size(); i++)
+		cout << "<" << tk[i].id << ", " << tk[i].content << ">" << endl;
 
     return 0;
 }
@@ -96,23 +68,68 @@ vector <char> readFile(string file) {
 	return result;
 }
 
-string machine (string state, char c, string chain, int row, int column) {
+vector <token> lexicalAnalysis(vector <char> entry) {
+	// Machine Variables
+	string state = "q0", chain = "";	
+	int line, column = line = 0;
+	int bLine, bColumn; //before line and column
 
+	int ptrChar = 0;
+	vector <token> *result = new vector <token>;
+
+	while (ptrChar < entry.size()){
+		if (entry[ptrChar] == 13) {
+			bLine = line;
+			bColumn = column;
+			line++;
+			column = 0;
+		}
+
+		state = machine(state, entry[ptrChar], chain, line, column, result);
+
+		//if (isFinal(entry[ptrChar]))
+		//	ptrChar--;
+
+		if (state == "q0") {
+			chain = "";
+			chain += entry[ptrChar];
+			entry[ptrChar] = 0;
+			if (chain == ";") {
+				state = machine(state, entry[ptrChar], chain, line, column, result);
+			}
+			chain = "";
+		}
+		
+		if (state == "qErr")
+			state = "";
+		if (entry[ptrChar] != 0)
+			chain = chain + entry[ptrChar];
+		
+		ptrChar++;
+	}
+	// Virtual EOF
+	state = machine(state, 0, chain, bLine, bColumn, result);
+
+	return *result;
+}
+
+string machine (string state, char c, string chain, int line, int column, vector<token> *ptrResult) {
+	
 	if (state == "q0") {
 		if (isLetter(c)) {
 			return "q1";
 		} else if (isSpecial(c) or c == 0) {
-			cout << "<" << token(chain) << ", " << chain << ">" << endl;
+			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		}
 	} else if (state == "q1") {
 		if (isLetter(c) or isDigit(c)) {
 			return "q1";
 		} else if (isFinal(c)) {
-			cout << "<" << token(chain) << ", " << chain << ">" << endl;
+			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
-			cout << "ERRO <l: " << row << ", c: " << column << ">: caracter nao esperado no contexto" << endl;
+			cout << "ERRO <l: " << line << ", c: " << column << ">: caracter nao esperado no contexto" << endl;
 			return "q0";
 		}
 	}
@@ -120,7 +137,16 @@ string machine (string state, char c, string chain, int row, int column) {
 	return "q0";
 }
 
-int token(string chain) {
+token newToken (int id, string content, int line, int column) {
+	token tk;
+	tk.id = id;
+	tk.content = content;
+	tk.line = line;
+	tk.column = column;
+	return tk;
+}
+
+int tokenRecognizer(string chain) {
 	
 	map <string, int> mapToken;
 
