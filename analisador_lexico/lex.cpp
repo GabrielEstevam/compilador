@@ -1,7 +1,6 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include <iostream>
 #include <string>
 #include <map>
 #include <set>
@@ -9,47 +8,9 @@
 #include <fstream>
 #include <vector>
 
+#include "lex.hpp"
+
 using namespace std;
-
-struct token {
-	int id, line, column;
-	string content;
-};
-
-// Global Variables
-
-// Functions Definitions
-vector <char> readFile (string file); // read file and process char by char
-vector <token> lexicalAnalysis(vector <char> entry); // execute the lexical analysis
-string machine (string state, char c, string chain, int line, int column, vector<token> *ptrResult); // process caracter and return the next state
-token newToken (int id, string content, int line, int column); // build a new token
-int tokenRecognizer(string chain); // Return token Id
-bool isLetter(char c); // a..z, A..Z
-bool isDigit(char c);  // 0..9
-bool isFinal(char c); // space \n ; EOF
-bool isOther(char c); // otherwise
-bool isSpecial(char c); // { } : , ( ) *
-
-int main(int argc, char *argv[]) {
-	
-	if (argc != 2) {
-		cout << "Argumento Invalido!" << endl;
-		return 0;
-	}
-	string file = argv[1];
-
-	cout << "File: " << file << endl; 
-
-	// Files Variables
-	vector <char> entry = readFile(file);
-
-	vector <token> tk = lexicalAnalysis(entry);
-
-	for (int i = 0; i < tk.size(); i++)
-		cout << "<" << tk[i].id << ", " << tk[i].content << ">" << endl;
-
-    return 0;
-}
 
 vector <char> readFile(string file) {
 	ifstream ffile (file);
