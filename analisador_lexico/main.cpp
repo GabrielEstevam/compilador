@@ -12,6 +12,8 @@
 
 using namespace std;
 
+vector <char> readFile (string file); // read file and process char by char
+
 int main(int argc, char *argv[]) {
 	
 	if (argc != 2) {
@@ -31,4 +33,21 @@ int main(int argc, char *argv[]) {
 		cout << "<" << tk[i].id << ", " << tk[i].content << ">" << endl;
 
 	return 0;
+}
+
+vector <char> readFile(string file) {
+	ifstream ffile (file);
+	char c;
+	string line;
+	vector <char> result;
+
+	if (ffile.is_open()) {
+		while (getline(ffile, line)) {
+			for (int i = 0; i < line.size(); i++) {
+				result.push_back(line[i]);
+			}
+		}
+		ffile.close();
+	}
+	return result;
 }

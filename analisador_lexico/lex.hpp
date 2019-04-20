@@ -4,7 +4,6 @@
 using namespace std;
 
 // Functions Definitions
-vector <char> readFile (string file); // read file and process char by char
 vector <token> lexicalAnalysis(vector <char> entry); // execute the lexical analysis
 string machine (string state, char c, string chain, int line, int column, vector<token> *ptrResult); // process caracter and return the next state
 token newToken (int id, string content, int line, int column); // build a new token

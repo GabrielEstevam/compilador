@@ -12,23 +12,6 @@
 
 using namespace std;
 
-vector <char> readFile(string file) {
-	ifstream ffile (file);
-	char c;
-	string line;
-	vector <char> result;
-
-	if (ffile.is_open()) {
-		while (getline(ffile, line)) {
-			for (int i = 0; i < line.size(); i++) {
-				result.push_back(line[i]);
-			}
-		}
-		ffile.close();
-	}
-	return result;
-}
-
 vector <token> lexicalAnalysis(vector <char> entry) {
 	// Machine Variables
 	string state = "q0", chain = "";	
@@ -146,19 +129,15 @@ int tokenRecognizer(string chain) {
 	mapToken[":"] = 41;
 	mapToken["/"] = 42;
 	mapToken[","] = 43;
-	mapToken[ "*"] = 44;
+	mapToken["*"] = 44;
 	mapToken[")"] = 45;
 	mapToken["("] = 46;
 	mapToken["!="] = 48;
 	mapToken["--"] = 49;
 	mapToken["-"] = 50;
 
-	map <string, int>::iterator it = mapToken.begin();
-    while(it != mapToken.end()){
-		if (it->first == chain)
-			return it->second;
-        it++;
-    }
+	if (mapToken[chain])
+		return mapToken[chain];
 	return 7; // default "nomevariavel"
 }
 
