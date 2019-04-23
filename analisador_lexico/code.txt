@@ -1,2 +1,2 @@
-whil dasde a ;return;
-main
+whil@aa dasde a ;return;
+maine

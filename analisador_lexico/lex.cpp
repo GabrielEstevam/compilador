@@ -20,40 +20,24 @@ vector <token> lexicalAnalysis(vector <char> entry) {
 
 	int ptrChar = 0;
 	vector <token> *result = new vector <token>;
+	entry.push_back(0);
 
-	while (ptrChar < entry.size()){
+	for (int ptrChar = 0; ptrChar < entry.size(); ptrChar++) {
 		if (entry[ptrChar] == 13) {
-			bLine = line;
-			bColumn = column;
 			line++;
 			column = 0;
 		}
 
 		state = machine(state, entry[ptrChar], chain, line, column, result);
-
-		//if (isFinal(entry[ptrChar]))
-		//	ptrChar--;
-
-		if (state == "q0") {
+		if (state == "q0")
 			chain = "";
+		else
 			chain += entry[ptrChar];
-			entry[ptrChar] = 0;
-			if (chain == ";") {
-				state = machine(state, entry[ptrChar], chain, line, column, result);
-			}
-			chain = "";
-		}
-		
-		if (state == "qErr")
-			state = "";
-		if (entry[ptrChar] != 0)
-			chain = chain + entry[ptrChar];
-		
-		ptrChar++;
-	}
-	// Virtual EOF
-	state = machine(state, 0, chain, bLine, bColumn, result);
 
+		if (isFinal(entry[ptrChar]))
+			state = machine(state, entry[ptrChar], "", line, column, result);
+	}
+	
 	return *result;
 }
 
@@ -62,8 +46,8 @@ string machine (string state, char c, string chain, int line, int column, vector
 	if (state == "q0") {
 		if (isLetter(c)) {
 			return "q1";
-		} else if (isSpecial(c) or c == 0) {
-			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
+		} else if (isSpecial(c) or c == ';') {
+			ptrResult->push_back(newToken(tokenRecognizer(chain = c), chain = c, line, column));
 			return "q0";
 		}
 	} else if (state == "q1") {
@@ -73,7 +57,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
-			cout << "ERRO <l: " << line << ", c: " << column << ">: caracter nao esperado no contexto" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", c: " << column << ">: caracter nao esperado no contexto" << "\033[0m" << endl;
 			return "q0";
 		}
 	}
