@@ -1,3 +1,12 @@
+/*
+	File name: main.cpp
+	Data: 2019, April.
+	Project description: Building a Compiler for DEC7565 at Computer Engineering. 
+	File description: the project main file, for while just read entry file and execute the lexical analysis.
+	Authors: Gabriel Estevam de Oliveira (15104138)
+			 Vinícius Rodrigues Zanon (15102833)
+*/
+
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
