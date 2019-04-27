@@ -19,6 +19,10 @@
 
 #include "lex.hpp"
 
+#define space 32
+#define dot_comma 59
+#define break_line 13
+
 using namespace std;
 
 vector <token> lexicalAnalysis(vector <char> entry) {
@@ -35,14 +39,12 @@ vector <token> lexicalAnalysis(vector <char> entry) {
 		if (state == "q0") {
 			chain = "";
 		} else {
-			if (entry[ptrChar] != '\'' and entry[ptrChar] != '"' and entry[ptrChar] != 0 and entry[ptrChar] != 13 and entry[ptrChar] != 59 ) {	
+			if (entry[ptrChar] != '\'' and entry[ptrChar] != '"' and entry[ptrChar] != '~' and entry[ptrChar] != EOF and entry[ptrChar] != break_line and entry[ptrChar] != dot_comma )
 				chain += entry[ptrChar];
-			}
 		}
-		if (isFinal(entry[ptrChar]) and entry[ptrChar] != 32) {
+		if (entry[ptrChar] == dot_comma)
 			state = machine(state, entry[ptrChar], "", line, column, result);
-		}
-		if (entry[ptrChar] == 13) {
+		if (entry[ptrChar] == break_line) {
 			line++;
 			column = 0;
 		} else {
@@ -142,7 +144,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 		if (c == '=') {
 			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
 			return "q0";
-		} else if (c == 32) {
+		} else if (c == space) {
 			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
@@ -164,7 +166,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 		} else if (c == '=') {
 			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
 			return "q0";
-		} else if (c == 32) {
+		} else if (c == space) {
 			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
@@ -178,7 +180,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 		} else if (c == '=') {
 			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
 			return "q0";
-		} else if (c == 32) {
+		} else if (c == space) {
 			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
@@ -189,7 +191,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 		if (c == '+') {
 			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
 			return "q0";
-		} else if (c == 32) {
+		} else if (c == space) {
 			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
@@ -200,7 +202,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 		if (c == '-') {
 			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
 			return "q0";
-		} else if (c == 32) {
+		} else if (c == space) {
 			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
@@ -208,7 +210,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 			return "q0";
 		}
 	} else if (state == "q9") {
-		if (c != '\'' and c != 0 and c != 13) {
+		if (c != '\'' and c != EOF and c != break_line) {
 			return "q91";
 		} else if (c == '\'') {
 			ptrResult->push_back(newToken(8, chain, line, column));
@@ -233,9 +235,9 @@ string machine (string state, char c, string chain, int line, int column, vector
 			return "q0";
 		}
 	} else if (state == "qA1") {
-		if (c != '"' and c != 13 and c != 0) {
+		if (c != '"' and c != break_line and c != 0) {
 			return "qA1";
-		} else if ( c == '\"') {
+		} else if (c == '\"') {
 			if (chain.size() <= 32)
 				ptrResult->push_back(newToken(10, chain, line, column));
 			else 
@@ -244,6 +246,54 @@ string machine (string state, char c, string chain, int line, int column, vector
 		} else {
 			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
 			return "q0";
+		}
+	} else if (state == "qB") {
+		if (c != '~') {
+			return "qB1";
+		} else {
+			ptrResult->push_back(newToken(12, chain, line, column));
+			return "q0";
+		}
+	} else if (state == "qB1") {
+		if (c != '~' and c != break_line and c != 0) {
+			return "qB1";
+		} else if (c == '~') {
+			if (chain.size() <= 32)
+				ptrResult->push_back(newToken(12, chain, line, column));
+			else 
+				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: tamanho excedido para literal" << "\033[0m" << endl;
+			return "q0";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "qC") {
+		if (c == '*') {
+			return "qC1";
+		} else if (c == space) {
+			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
+			return "q0";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "qC1") {
+		if (c != '*' and c != EOF) {
+			return "qC1";
+		} else if (c == '*') {
+			return "qC11";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "qC11") {
+		if (c == '/') {
+			return "q0";
+		} else if (c == EOF) {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		} else {
+			return "qC1";
 		}
 	}
 
@@ -325,7 +375,7 @@ bool isDigit(char c){
 }
 
 bool isFinal(char c){
-	if(c == 32  or c == 59 or c == 13 or c == 0) 
+	if(c == space or c == dot_comma or c == break_line or c == EOF) 
 		return 1;
 	else 
 		return 0;
