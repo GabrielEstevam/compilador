@@ -29,22 +29,25 @@ vector <token> lexicalAnalysis(vector <char> entry) {
 
 	int ptrChar = 0;
 	vector <token> *result = new vector <token>;
-	entry.push_back(0);
 
 	for (int ptrChar = 0; ptrChar < entry.size(); ptrChar++) {
+		state = machine(state, entry[ptrChar], chain, line, column, result);
+		if (state == "q0") {
+			chain = "";
+		} else {
+			if (entry[ptrChar] != '\'' and entry[ptrChar] != '"' and entry[ptrChar] != 0 and entry[ptrChar] != 13 and entry[ptrChar] != 59 ) {	
+				chain += entry[ptrChar];
+			}
+		}
+		if (isFinal(entry[ptrChar]) and entry[ptrChar] != 32) {
+			state = machine(state, entry[ptrChar], "", line, column, result);
+		}
 		if (entry[ptrChar] == 13) {
 			line++;
 			column = 0;
+		} else {
+			column++;
 		}
-
-		state = machine(state, entry[ptrChar], chain, line, column, result);
-		if (state == "q0")
-			chain = "";
-		else
-			chain += entry[ptrChar];
-
-		if (isFinal(entry[ptrChar]))
-			state = machine(state, entry[ptrChar], "", line, column, result);
 	}
 	
 	return *result;
@@ -55,18 +58,191 @@ string machine (string state, char c, string chain, int line, int column, vector
 	if (state == "q0") {
 		if (isLetter(c)) {
 			return "q1";
+		} else if(isDigit(c)){
+			return "q2";
+		} else if (c == '=') {
+			return "q3";
+		} else if (c == '!') {
+			return "q4";
+		} else if (c == '>') {
+			return "q5";
+		} else if (c == '<') {
+			return "q6";
+		} else if (c == '+') {
+			return "q7";
+		} else if (c == '-') {
+			return "q8";
+		} else if (c == '\'') {
+			return "q9";
+		} else if (c == '"') {
+			return "qA";
+		} else if (c == '~') {
+			return "qB";
+		} else if (c == '/') {
+			return "qC";
 		} else if (isSpecial(c) or c == ';') {
 			ptrResult->push_back(newToken(tokenRecognizer(chain = c), chain = c, line, column));
 			return "q0";
+		} else if (isFinal(c) and c != ';') {
+			return "q0";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
 		}
+
 	} else if (state == "q1") {
 		if (isLetter(c) or isDigit(c)) {
 			return "q1";
 		} else if (isFinal(c)) {
+			if (chain.size() <= 64)
+				ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
+			else
+				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: tamanho excedido para cadeia de caracteres" << "\033[0m" << endl;
+			return "q0";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "q2") {
+		if (isDigit(c)) {
+			return "q2";
+		} else if (c == '.') {
+			return "q21";
+		} else if (isFinal(c)) {
+			if (chain.size() <= 4)
+				ptrResult->push_back(newToken(5, chain, line, column));
+			else
+				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: tamanho excedido para integer" << "\033[0m" << endl;
+			return "q0";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "q21") {
+		if (isDigit(c)) {
+			return "q22";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "q22") {
+		if (isDigit(c)) {
+			return "q22";
+		} else if (isFinal(c)) {
+			if (chain.size() <= 9)
+				ptrResult->push_back(newToken(6, chain, line, column));
+			else
+				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: tamanho excedido para float" << "\033[0m" << endl;
+			return "q0";	
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "q3") {
+		if (c == '=') {
+			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
+			return "q0";
+		} else if (c == 32) {
 			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", c: " << column << ">: caracter nao esperado no contexto" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "q4") {
+		if (c == '=') {
+			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
+			return "q0";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "q5") {
+		if (c == '>') {
+			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
+			return "q0";
+		} else if (c == '=') {
+			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
+			return "q0";
+		} else if (c == 32) {
+			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
+			return "q0";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "q6") {
+		if (c == '<') {
+			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
+			return "q0";
+		} else if (c == '=') {
+			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
+			return "q0";
+		} else if (c == 32) {
+			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
+			return "q0";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "q7") {
+		if (c == '+') {
+			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
+			return "q0";
+		} else if (c == 32) {
+			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
+			return "q0";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "q8") {
+		if (c == '-') {
+			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
+			return "q0";
+		} else if (c == 32) {
+			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
+			return "q0";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "q9") {
+		if (c != '\'' and c != 0 and c != 13) {
+			return "q91";
+		} else if (c == '\'') {
+			ptrResult->push_back(newToken(8, chain, line, column));
+			return "q0";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "q91") {
+		if (c == '\'') {
+			ptrResult->push_back(newToken(8, chain, line, column));
+			return "q0";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			return "q0";
+		}
+	} else if (state == "qA") {
+		if (c != '"') {
+			return "qA1";
+		} else {
+			ptrResult->push_back(newToken(10, chain, line, column));
+			return "q0";
+		}
+	} else if (state == "qA1") {
+		if (c != '"' and c != 13 and c != 0) {
+			return "qA1";
+		} else if ( c == '\"') {
+			if (chain.size() <= 32)
+				ptrResult->push_back(newToken(10, chain, line, column));
+			else 
+				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: tamanho excedido para string" << "\033[0m" << endl;
+			return "q0";
+		} else {
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
 			return "q0";
 		}
 	}

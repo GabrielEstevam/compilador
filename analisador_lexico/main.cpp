@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
 
 	// Files Variables
 	vector <char> entry = readFile(file);
+	entry.push_back(0);
 
 	vector <token> tk = lexicalAnalysis(entry);
 
