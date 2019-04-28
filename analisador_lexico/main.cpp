@@ -39,9 +39,16 @@ int main(int argc, char *argv[]) {
 
 	vector <token> tk = lexicalAnalysis(entry);
 
-	for (int i = 0; i < tk.size(); i++)
+	cout << "Tokens reconhecidos: " << endl;
+	cout << "<id, lexema>" << endl;
+	int linha = 0;
+	for (int i = 0; i < tk.size(); i++) {
+		if (tk[i].line != linha) {
+			cout << "\nLinha " << tk[i].line << endl;
+			linha = tk[i].line;
+		}
 		cout << "<" << tk[i].id << ", " << tk[i].content << ">" << endl;
-
+	}
 	return 0;
 }
 
