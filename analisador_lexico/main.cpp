@@ -39,8 +39,18 @@ int main(int argc, char *argv[]) {
 
 	vector <token> tk = lexicalAnalysis(entry);
 
+	// Changing 'nomevariavel' to 'nomedavariavel'
+	for (int i = 0; i < tk.size(); i++) {
+		if (tk[i].id == 4) {
+			if (i + 2 < tk.size()) {
+				if (tk[i+1].id == 46 and tk[i+2].id == 7)
+					tk[i+2].id = 9;
+			}
+		}
+	}
+
 	cout << "Tokens reconhecidos: " << endl;
-	cout << "< id , lexema >" << endl;
+	cout << "<id , lexema>" << endl;
 	int linha = 0;
 	for (int i = 0; i < tk.size(); i++) {
 		if (tk[i].line != linha) {

@@ -20,5 +20,4 @@ int tokenRecognizer(string chain); // Return token Id
 bool isLetter(char c); // a..z, A..Z
 bool isDigit(char c);  // 0..9
 bool isFinal(char c); // space \n ; EOF
-bool isOther(char c); // otherwise
 bool isSpecial(char c); // { } : , ( ) *

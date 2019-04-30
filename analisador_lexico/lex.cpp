@@ -395,10 +395,3 @@ bool isSpecial(char c){
 	else 
 		return 0;
 }
-
-bool isOther(char c){
-	if (isLetter(c) or isDigit(c) or isFinal(c) or isSpecial(c)) 
-		return 0;
-	else 
-		return 1;
-}
