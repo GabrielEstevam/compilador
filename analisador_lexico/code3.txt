@@ -1,0 +1,24 @@
+void main {
+	n , i : integer ; a , b , r , soma : float ;
+		
+	inicio
+
+	/* SÉRIE SOMA ALGEBRICA */
+
+	n = 10;
+	i = 0;
+	a = 1.0;
+	b = 3.0;
+	r = 1.0;
+	soma = 1.0;
+
+	r = a / b;
+
+	for ( i = 0; i < n; ++1 ) {
+		soma = soma + r;
+		r = r * ( a / b );
+		cout << ~SOMA: ~ << soma;
+	}
+
+	fim
+}

@@ -97,7 +97,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 		} else if (isFinal(c) and c != ';') {
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: caracter nao esperado" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: caracter nao esperado" << "\033[0m" << endl;
 			return "q0";
 		}
 
@@ -108,10 +108,10 @@ string machine (string state, char c, string chain, int line, int column, vector
 			if (chain.size() <= 64)
 				ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			else
-				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: tamanho excedido para cadeia de caracteres" << "\033[0m" << endl;
+				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: tamanho excedido para cadeia de caracteres" << "\033[0m" << endl;
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: declaracao de palavra reservada ou identificador" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: declaracao de palavra reservada ou identificador" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "q2") {
@@ -123,17 +123,17 @@ string machine (string state, char c, string chain, int line, int column, vector
 			if (chain.size() <= 4)
 				ptrResult->push_back(newToken(5, chain, line, column));
 			else
-				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: tamanho excedido para integer" << "\033[0m" << endl;
+				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: tamanho excedido para integer" << "\033[0m" << endl;
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: declaracao de inteiro" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: declaracao de inteiro" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "q21") {
 		if (isDigit(c)) {
 			return "q22";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: declaracao de float, no minimo um digito apos a virgula" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: declaracao de float, no minimo um digito apos a virgula" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "q22") {
@@ -143,10 +143,10 @@ string machine (string state, char c, string chain, int line, int column, vector
 			if (chain.size() <= 9)
 				ptrResult->push_back(newToken(6, chain, line, column));
 			else
-				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: tamanho excedido para float" << "\033[0m" << endl;
+				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: tamanho excedido para float" << "\033[0m" << endl;
 			return "q0";	
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: declaracao de float" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: declaracao de float" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "q3") {
@@ -157,7 +157,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: operador de igualdade" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: operador de igualdade" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "q4") {
@@ -165,7 +165,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 			ptrResult->push_back(newToken(tokenRecognizer(chain + c), chain + c, line, column));
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: experado '='" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: experado '='" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "q5") {
@@ -179,7 +179,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: esperado '>', '=' ou espaco" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: esperado '>', '=' ou espaco" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "q6") {
@@ -193,7 +193,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: esperado '<', '=' ou espaco" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: esperado '<', '=' ou espaco" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "q7") {
@@ -204,7 +204,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: esperado '+' ou espaco" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: esperado '+' ou espaco" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "q8") {
@@ -215,7 +215,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: esperado '-' ou espaco" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: esperado '-' ou espaco" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "q9") {
@@ -225,7 +225,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 			ptrResult->push_back(newToken(8, chain, line, column));
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: nao esperado quebra de linha ou final de arquivo em declaracao de char" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: nao esperado quebra de linha ou final de arquivo em declaracao de char" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "q91") {
@@ -233,7 +233,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 			ptrResult->push_back(newToken(8, chain, line, column));
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: esperado aspas simples" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: esperado aspas simples" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "qA") {
@@ -250,10 +250,10 @@ string machine (string state, char c, string chain, int line, int column, vector
 			if (chain.size() <= 32)
 				ptrResult->push_back(newToken(10, chain, line, column));
 			else 
-				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: tamanho excedido para string" << "\033[0m" << endl;
+				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: tamanho excedido para string" << "\033[0m" << endl;
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: nao esperado quebra de linha ou final de arquivo em declaracao de string" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: nao esperado quebra de linha ou final de arquivo em declaracao de string" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "qB") {
@@ -270,10 +270,10 @@ string machine (string state, char c, string chain, int line, int column, vector
 			if (chain.size() <= 32)
 				ptrResult->push_back(newToken(12, chain, line, column));
 			else 
-				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: tamanho excedido para literal" << "\033[0m" << endl;
+				cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: tamanho excedido para literal" << "\033[0m" << endl;
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: nao esperado quebra de linha ou final de arquivo em declaracao de literal" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: nao esperado quebra de linha ou final de arquivo em declaracao de literal" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "qC") {
@@ -283,7 +283,7 @@ string machine (string state, char c, string chain, int line, int column, vector
 			ptrResult->push_back(newToken(tokenRecognizer(chain), chain, line, column));
 			return "q0";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: esperado espaco ou '*'" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: esperado espaco ou '*'" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "qC1") {
@@ -292,14 +292,14 @@ string machine (string state, char c, string chain, int line, int column, vector
 		} else if (c == '*') {
 			return "qC11";
 		} else {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: nao esperado fim de arquivo" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: nao esperado fim de arquivo" << "\033[0m" << endl;
 			return "q0";
 		}
 	} else if (state == "qC11") {
 		if (c == '/') {
 			return "q0";
 		} else if (c == EOF) {
-			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column-1 << ">: esperado '/'" << "\033[0m" << endl;
+			cout << "\033[1;31m" << "ERRO <linha: " << line << ", coluna: " << column << ">: esperado '/'" << "\033[0m" << endl;
 			return "q0";
 		} else {
 			return "qC1";

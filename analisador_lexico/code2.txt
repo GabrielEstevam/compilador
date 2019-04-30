@@ -1,0 +1,19 @@
+void main {
+	inpt1, inpt2, outp: integer; /*Declaração Variáveis*/
+
+	integer soma ( integer , integer  ){ /*Função Soma*/
+		resultado : integer;
+		inicio 
+		resultado = a + b; 
+		fim 
+		return ( resultado )
+	}
+	inicio 
+		cout << ~Digite o 1 numero: ~;
+		cin >> inpt1;
+		cout << ~Digite o 2 numero: ~;
+		cin >> inpt2;
+		outp = callfuncao soma ( integer, integer );
+		cout << ~Soma: ~ << outp;
+	fim
+}
