@@ -17,7 +17,7 @@
 #include <fstream>
 #include <vector>
 
-#include "lex.hpp"
+#include "sin.hpp"
 
 using namespace std;
 
@@ -59,6 +59,9 @@ int main(int argc, char *argv[]) {
 		}
 		cout << "<" << tk[i].id << ", '" << tk[i].content << "'>" << endl;
 	}
+
+	syntacticAnalysis(tk);
+
 	return 0;
 }
 
