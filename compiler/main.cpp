@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
+	/*
 	cout << "Tokens reconhecidos: " << endl;
 	cout << "<id , lexema>" << endl;
 	int linha = 0;
@@ -58,7 +59,7 @@ int main(int argc, char *argv[]) {
 			linha = tk[i].line;
 		}
 		cout << "<" << tk[i].id << ", '" << tk[i].content << "'>" << endl;
-	}
+	}*/
 
 	syntacticAnalysis(tk);
 

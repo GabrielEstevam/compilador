@@ -8,9 +8,12 @@
 */
 
 #include <string>
+#include <utility> // include pair
 #include "lex.hpp"
 
 using namespace std;
 
 // Functions Definitions
 void syntacticAnalysis(vector <token> entry); // execute the syntactic analysis
+map < pair<int, int>, int> initParseTable(); // init parsing table
+map < int, pair<int, vector<int>> > createRules(); // build the table rules
