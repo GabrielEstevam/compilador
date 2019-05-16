@@ -16,6 +16,7 @@
 #include <iterator>
 #include <fstream>
 #include <vector>
+#include <stack>
 
 #include "sin.hpp"
 
@@ -24,9 +25,31 @@ using namespace std;
 void syntacticAnalysis(vector <token> entry) {
 
 	map < pair<int, int>, int> parseTable = initParseTable();
-	//cout << parseTable[make_pair(1, 2)] << endl;
 	map <int, pair<int, vector<int>> > rules = createRules();
-	cout << rules[1].second[3] << endl;
+	stack <int> execStack;
+	int ptrEntry = 0;
+	int ptrStack = 0;
+	int i, Mx;
+
+	// Syntactic Analyzer Algorithm
+	execStack.push(51);
+	while(!execStack.empty() and ptrEntry < entry.size()) {
+		if (entry[ptrEntry].id == execStack.top()) {
+			execStack.pop();
+			ptrEntry++;
+		} else {
+			Mx = parseTable[make_pair(execStack.top(), entry[ptrEntry].id)];
+			if (Mx != 0) {
+				execStack.pop();
+				for (i = rules[Mx].second.size()-1; i >= 0; i--)
+					execStack.push(rules[Mx].second[i]);
+			} else {
+				cout << "Deu ruim" << endl;
+			}
+		}
+	}
+	if (ptrEntry != entry.size() or !execStack.empty())
+		cout << "Deu ruim" << endl;
 }
 
 map < pair<int, int>, int> initParseTable() {
@@ -167,91 +190,91 @@ map < int, pair<int, vector<int>> > createRules() {
 	rules[1] = make_pair(41, vector<int> {2, 11, 39, 52, 53, 54, 38});
 	rules[2] = make_pair(52, vector<int> {7, 55, 41, 56, 40, 57});
 	rules[3] = make_pair(52, vector<int> {});
-	rules[4] = make_pair(52, vector<int> {});
-	rules[5] = make_pair(52, vector<int> {});
-	rules[6] = make_pair(52, vector<int> {});
-	rules[7] = make_pair(52, vector<int> {});
-	rules[8] = make_pair(52, vector<int> {});
-	rules[9] = make_pair(52, vector<int> {});
-	rules[10] = make_pair(52, vector<int> {});
-	rules[11] = make_pair(52, vector<int> {});
-	rules[12] = make_pair(52, vector<int> {});
-	rules[13] = make_pair(52, vector<int> {});
-	rules[14] = make_pair(52, vector<int> {});
-	rules[15] = make_pair(52, vector<int> {});
-	rules[16] = make_pair(52, vector<int> {});
-	rules[17] = make_pair(52, vector<int> {});
-	rules[18] = make_pair(52, vector<int> {});
-	rules[19] = make_pair(52, vector<int> {});
-	rules[20] = make_pair(52, vector<int> {});
-	rules[21] = make_pair(52, vector<int> {});
-	rules[22] = make_pair(52, vector<int> {});
-	rules[23] = make_pair(52, vector<int> {});
-	rules[24] = make_pair(52, vector<int> {});
-	rules[25] = make_pair(52, vector<int> {});
-	rules[26] = make_pair(52, vector<int> {});
-	rules[27] = make_pair(52, vector<int> {});
-	rules[28] = make_pair(52, vector<int> {});
-	rules[29] = make_pair(52, vector<int> {});
-	rules[30] = make_pair(52, vector<int> {});
-	rules[31] = make_pair(52, vector<int> {});
-	rules[32] = make_pair(52, vector<int> {});
-	rules[33] = make_pair(52, vector<int> {});
-	rules[34] = make_pair(52, vector<int> {});
-	rules[35] = make_pair(52, vector<int> {});
-	rules[36] = make_pair(52, vector<int> {});
-	rules[37] = make_pair(52, vector<int> {});
-	rules[38] = make_pair(52, vector<int> {});
-	rules[39] = make_pair(52, vector<int> {});
-	rules[40] = make_pair(52, vector<int> {});
-	rules[41] = make_pair(52, vector<int> {});
-	rules[42] = make_pair(52, vector<int> {});
-	rules[43] = make_pair(52, vector<int> {});
-	rules[44] = make_pair(52, vector<int> {});
-	rules[45] = make_pair(52, vector<int> {});
-	rules[46] = make_pair(52, vector<int> {});
-	rules[47] = make_pair(52, vector<int> {});
-	rules[48] = make_pair(52, vector<int> {});
-	rules[49] = make_pair(52, vector<int> {});
-	rules[50] = make_pair(52, vector<int> {});
-	rules[51] = make_pair(52, vector<int> {});
-	rules[52] = make_pair(52, vector<int> {});
-	rules[53] = make_pair(52, vector<int> {});
-	rules[54] = make_pair(52, vector<int> {});
-	rules[55] = make_pair(52, vector<int> {});
-	rules[56] = make_pair(52, vector<int> {});
-	rules[57] = make_pair(52, vector<int> {});
-	rules[58] = make_pair(52, vector<int> {});
-	rules[59] = make_pair(52, vector<int> {});
-	rules[60] = make_pair(52, vector<int> {});
-	rules[61] = make_pair(52, vector<int> {});
-	rules[62] = make_pair(52, vector<int> {});
-	rules[63] = make_pair(52, vector<int> {});
-	rules[64] = make_pair(52, vector<int> {});
-	rules[65] = make_pair(52, vector<int> {});
-	rules[66] = make_pair(52, vector<int> {});
-	rules[67] = make_pair(52, vector<int> {});
-	rules[68] = make_pair(52, vector<int> {});
-	rules[69] = make_pair(52, vector<int> {});
-	rules[70] = make_pair(52, vector<int> {});
-	rules[71] = make_pair(52, vector<int> {});
-	rules[72] = make_pair(52, vector<int> {});
-	rules[73] = make_pair(52, vector<int> {});
-	rules[74] = make_pair(52, vector<int> {});
-	rules[75] = make_pair(52, vector<int> {});
-	rules[76] = make_pair(52, vector<int> {});
-	rules[77] = make_pair(52, vector<int> {});
-	rules[78] = make_pair(52, vector<int> {});
-	rules[79] = make_pair(52, vector<int> {});
-	rules[80] = make_pair(52, vector<int> {});
-	rules[81] = make_pair(52, vector<int> {});
-	rules[82] = make_pair(52, vector<int> {});
-	rules[83] = make_pair(52, vector<int> {});
-	rules[84] = make_pair(52, vector<int> {});
-	rules[85] = make_pair(52, vector<int> {});
-	rules[86] = make_pair(52, vector<int> {});
-	rules[87] = make_pair(52, vector<int> {});
-	rules[88] = make_pair(52, vector<int> {});
-	rules[89] = make_pair(52, vector<int> {});
+	rules[4] = make_pair(55, vector<int> {});
+	rules[5] = make_pair(55, vector<int> {43, 7, 55});
+	rules[6] = make_pair(56, vector<int> {13});
+	rules[7] = make_pair(56, vector<int> {19});
+	rules[8] = make_pair(56, vector<int> {3});
+	rules[9] = make_pair(56, vector<int> {26});
+	rules[10] = make_pair(57, vector<int> {});
+	rules[11] = make_pair(57, vector<int> {59, 41, 56, 40, 57});
+	rules[12] = make_pair(59, vector<int> {12, 55});
+	rules[13] = make_pair(53, vector<int> {60, 7, 61, 39, 52, 53, 54, 4, 46, 62, 45, 38, 53});
+	rules[14] = make_pair(60, vector<int> {13});
+	rules[15] = make_pair(60, vector<int> {2});
+	rules[16] = make_pair(60, vector<int> {26});
+	rules[17] = make_pair(60, vector<int> {19});
+	rules[18] = make_pair(60, vector<int> {3});
+	rules[19] = make_pair(53, vector<int> {});
+	rules[20] = make_pair(62, vector<int> {5});
+	rules[21] = make_pair(62, vector<int> {6});
+	rules[22] = make_pair(62, vector<int> {9});
+	rules[23] = make_pair(62, vector<int> {8});
+	rules[24] = make_pair(62, vector<int> {10});
+	rules[25] = make_pair(62, vector<int> {});
+	rules[26] = make_pair(61, vector<int> {});
+	rules[27] = make_pair(61, vector<int> {39, 63, 38});
+	rules[28] = make_pair(63, vector<int> {56, 64});
+	rules[29] = make_pair(64, vector<int> {40, 56, 64});
+	rules[30] = make_pair(64, vector<int> {});
+	rules[31] = make_pair(54, vector<int> {15, 65, 40, 66, 20});
+	rules[32] = make_pair(66, vector<int> {});
+	rules[33] = make_pair(66, vector<int> {65, 40, 66});
+	rules[34] = make_pair(65, vector<int> {7, 32, 67});
+	rules[35] = make_pair(65, vector<int> {10, 32, 67});
+	rules[36] = make_pair(65, vector<int> {8, 32, 67});
+	rules[37] = make_pair(65, vector<int> {67, 32, 67});
+	rules[38] = make_pair(65, vector<int> {});
+	rules[39] = make_pair(65, vector<int> {27, 7, 68});
+	rules[40] = make_pair(68, vector<int> {});
+	rules[41] = make_pair(68, vector<int> {39, 69, 70, 38});
+	rules[42] = make_pair(70, vector<int> {});
+	rules[43] = make_pair(70, vector<int> {43, 69, 70});
+	rules[44] = make_pair(69, vector<int> {5});
+	rules[45] = make_pair(69, vector<int> {10});
+	rules[46] = make_pair(69, vector<int> {6});
+	rules[47] = make_pair(69, vector<int> {8});
+	rules[48] = make_pair(69, vector<int> {7});
+	rules[49] = make_pair(65, vector<int> {16, 46, 7, 71, 45, 39, 65, 40, 66, 38, 72});
+	rules[50] = make_pair(72, vector<int> {21, 39, 65, 40, 66, 38});
+	rules[51] = make_pair(72, vector<int> {});
+	rules[52] = make_pair(65, vector<int> {1, 46, 7, 71, 45, 39, 65, 40, 66, 38});
+	rules[53] = make_pair(71, vector<int> {31, 73});
+	rules[54] = make_pair(71, vector<int> {48, 73});
+	rules[55] = make_pair(71, vector<int> {30, 73});
+	rules[56] = make_pair(71, vector<int> {29, 73});
+	rules[57] = make_pair(71, vector<int> {35, 73});
+	rules[58] = make_pair(71, vector<int> {33, 73});
+	rules[59] = make_pair(73, vector<int> {5});
+	rules[60] = make_pair(73, vector<int> {6});
+	rules[61] = make_pair(73, vector<int> {10});
+	rules[62] = make_pair(73, vector<int> {8});
+	rules[63] = make_pair(73, vector<int> {7});
+	rules[64] = make_pair(65, vector<int> {18, 46, 7, 32, 73, 40, 7, 71, 40, 74, 45, 39, 65, 40, 66, 38});
+	rules[65] = make_pair(74, vector<int> {36, 5});
+	rules[66] = make_pair(74, vector<int> {49, 5});
+	rules[67] = make_pair(65, vector<int> {23, 39, 65, 40, 66, 38, 1, 46, 7, 71, 45});
+	rules[68] = make_pair(65, vector<int> {25, 28, 7});
+	rules[69] = make_pair(65, vector<int> {24, 34, 12, 75});
+	rules[70] = make_pair(75, vector<int> {});
+	rules[71] = make_pair(75, vector<int> {34, 7, 76, 75});
+	rules[72] = make_pair(75, vector<int> {34, 12, 75});
+	rules[73] = make_pair(76, vector<int> {});
+	rules[74] = make_pair(76, vector<int> {43, 7, 76});
+	rules[75] = make_pair(67, vector<int> {79, 80});
+	rules[76] = make_pair(67, vector<int> {27, 7, 68});
+	rules[77] = make_pair(80, vector<int> {37, 79, 80});
+	rules[78] = make_pair(80, vector<int> {50, 79, 80});
+	rules[79] = make_pair(80, vector<int> {});
+	rules[80] = make_pair(79, vector<int> {81, 82});
+	rules[81] = make_pair(82, vector<int> {});
+	rules[82] = make_pair(82, vector<int> {44, 81, 82});
+	rules[83] = make_pair(82, vector<int> {42, 81, 82});
+	rules[84] = make_pair(81, vector<int> {5});
+	rules[85] = make_pair(81, vector<int> {6});
+	rules[86] = make_pair(81, vector<int> {7});
+	rules[87] = make_pair(81, vector<int> {10});
+	rules[88] = make_pair(81, vector<int> {8});
+	rules[89] = make_pair(81, vector<int> {46, 67, 45});
 	return rules;
 }
