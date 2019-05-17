@@ -49,8 +49,8 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	/*
-	cout << "Tokens reconhecidos: " << endl;
+	
+	/*cout << "Tokens reconhecidos: " << endl;
 	cout << "<id , lexema>" << endl;
 	int linha = 0;
 	for (int i = 0; i < tk.size(); i++) {

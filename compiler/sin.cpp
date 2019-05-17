@@ -16,7 +16,6 @@
 #include <iterator>
 #include <fstream>
 #include <vector>
-#include <stack>
 
 #include "sin.hpp"
 
@@ -26,30 +25,37 @@ void syntacticAnalysis(vector <token> entry) {
 
 	map < pair<int, int>, int> parseTable = initParseTable();
 	map <int, pair<int, vector<int>> > rules = createRules();
-	stack <int> execStack;
+	vector <int> execStack;
 	int ptrEntry = 0;
 	int ptrStack = 0;
 	int i, Mx;
 
 	// Syntactic Analyzer Algorithm
-	execStack.push(51);
+	execStack.push_back(51);
+	printStack(execStack);
 	while(!execStack.empty() and ptrEntry < entry.size()) {
-		if (entry[ptrEntry].id == execStack.top()) {
-			execStack.pop();
+		/*cout << entry[ptrEntry].id << "-" << execStack.back() << endl;
+		cout << "  Pilha: {$";
+		for (i = 0; i < execStack.size(); i++)
+			cout << ", " << execStack[i];
+		cout << "}" << endl;*/
+		if (entry[ptrEntry].id == execStack.back()) {
+			execStack.pop_back();
+			printToken(entry, ptrEntry, execStack);
 			ptrEntry++;
 		} else {
-			Mx = parseTable[make_pair(execStack.top(), entry[ptrEntry].id)];
+			Mx = parseTable[make_pair(execStack.back(), entry[ptrEntry].id)];
 			if (Mx != 0) {
-				execStack.pop();
+				execStack.pop_back();
 				for (i = rules[Mx].second.size()-1; i >= 0; i--)
-					execStack.push(rules[Mx].second[i]);
+					execStack.push_back(rules[Mx].second[i]);
+				printStack(execStack);
 			} else {
-				cout << "Deu ruim" << endl;
+				cout << "Erro Sintatico" << endl;
+				break;
 			}
 		}
 	}
-	if (ptrEntry != entry.size() or !execStack.empty())
-		cout << "Deu ruim" << endl;
 }
 
 map < pair<int, int>, int> initParseTable() {
@@ -118,7 +124,10 @@ map < pair<int, int>, int> initParseTable() {
 	parseTable[make_pair(65,27)] = 39;
 	parseTable[make_pair(65,40)] = 38;
 	parseTable[make_pair(65,46)] = 37;
-	parseTable[make_pair(66,20)] = 33;
+	//parseTable[make_pair(66,7)] = 33; // append
+	parseTable[make_pair(66,20)] = 32; // modify 33 -> 32
+	//parseTable[make_pair(66,24)] = 33; // append
+	//parseTable[make_pair(66,25)] = 33; // append
 	parseTable[make_pair(66,38)] = 33;
 	parseTable[make_pair(67,5)] = 75;
 	parseTable[make_pair(67,6)] = 75;
@@ -153,7 +162,7 @@ map < pair<int, int>, int> initParseTable() {
 	parseTable[make_pair(73,10)] = 61;
 	parseTable[make_pair(74,36)] = 65;
 	parseTable[make_pair(74,49)] = 66;
-	parseTable[make_pair(75,34)] = 72;
+	parseTable[make_pair(75,34)] = 72; // modified 72 -> 71
 	parseTable[make_pair(75,40)] = 70;
 	parseTable[make_pair(76,34)] = 73;
 	parseTable[make_pair(76,40)] = 73;
@@ -198,7 +207,7 @@ map < int, pair<int, vector<int>> > createRules() {
 	rules[9] = make_pair(56, vector<int> {26});
 	rules[10] = make_pair(57, vector<int> {});
 	rules[11] = make_pair(57, vector<int> {59, 41, 56, 40, 57});
-	rules[12] = make_pair(59, vector<int> {12, 55});
+	rules[12] = make_pair(59, vector<int> {7, 55});
 	rules[13] = make_pair(53, vector<int> {60, 7, 61, 39, 52, 53, 54, 4, 46, 62, 45, 38, 53});
 	rules[14] = make_pair(60, vector<int> {13});
 	rules[15] = make_pair(60, vector<int> {2});
@@ -213,7 +222,7 @@ map < int, pair<int, vector<int>> > createRules() {
 	rules[24] = make_pair(62, vector<int> {10});
 	rules[25] = make_pair(62, vector<int> {});
 	rules[26] = make_pair(61, vector<int> {});
-	rules[27] = make_pair(61, vector<int> {39, 63, 38});
+	rules[27] = make_pair(61, vector<int> {46, 63, 45});
 	rules[28] = make_pair(63, vector<int> {56, 64});
 	rules[29] = make_pair(64, vector<int> {40, 56, 64});
 	rules[30] = make_pair(64, vector<int> {});
@@ -227,7 +236,7 @@ map < int, pair<int, vector<int>> > createRules() {
 	rules[38] = make_pair(65, vector<int> {});
 	rules[39] = make_pair(65, vector<int> {27, 7, 68});
 	rules[40] = make_pair(68, vector<int> {});
-	rules[41] = make_pair(68, vector<int> {39, 69, 70, 38});
+	rules[41] = make_pair(68, vector<int> {46, 69, 70, 45});
 	rules[42] = make_pair(70, vector<int> {});
 	rules[43] = make_pair(70, vector<int> {43, 69, 70});
 	rules[44] = make_pair(69, vector<int> {5});
@@ -277,4 +286,25 @@ map < int, pair<int, vector<int>> > createRules() {
 	rules[88] = make_pair(81, vector<int> {8});
 	rules[89] = make_pair(81, vector<int> {46, 67, 45});
 	return rules;
+}
+
+void printToken(vector <token> entry, int ptrEntry, vector <int> execStack) {
+	int i;
+	cout << "\n == Token Processado == " << endl;
+	cout << "  ID: " << entry[ptrEntry].id << endl;
+	cout << "  Token: " << entry[ptrEntry].content << endl;
+	cout << "  Linha: " << entry[ptrEntry].line << endl;
+	cout << "  Pilha: {$";
+	for (i = 0; i < execStack.size(); i++)
+		cout << ", " << execStack[i];
+	cout << "}" << endl;
+}
+
+void printStack(vector <int> execStack) {
+	int i;
+	cout << "\n == Acao-Regra == " << endl;
+	cout << "  Pilha: {$";
+	for (i = 0; i < execStack.size(); i++)
+		cout << ", " << execStack[i];
+	cout << "}" << endl;	
 }

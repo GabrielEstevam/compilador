@@ -1,5 +1,6 @@
 void main {
-	n , i : integer ; a , b , r , soma : float ;
+	n , i : integer ; 
+	a , b , r , soma : float ;
 		
 	inicio
 

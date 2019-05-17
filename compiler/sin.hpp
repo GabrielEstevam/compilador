@@ -17,3 +17,5 @@ using namespace std;
 void syntacticAnalysis(vector <token> entry); // execute the syntactic analysis
 map < pair<int, int>, int> initParseTable(); // init parsing table
 map < int, pair<int, vector<int>> > createRules(); // build the table rules
+void printToken (vector<token> entry, int ptrToken, vector <int> execStack); // print tokens
+void printStack (vector<int> execStack); // print stack
