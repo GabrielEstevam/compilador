@@ -1,1 +1,45 @@
-void main { inicio ; fim }
+void main {
+	a , b , c , d : integer ; s : string ; c1 , c2 , c3 : char ; f : float ;
+	integer funcao1 ( integer ; string ) {
+		r : integer ;
+		void funcao11 {
+			inicio
+			;
+			fim
+			return ( r )
+		}
+		inicio
+			cin >> r;
+		fim
+		return ( r )
+	}
+	string funcao2 ( integer ) {
+		inicio
+			cadeia = "atribuicao"; /* erro semantico */
+		fim
+		return ( z )
+	}
+	inicio
+		if ( a == b ) {
+			cout << ~iguais~ << ~ a e b ~ << a , b ;
+		} else {
+			cout << ~diferentes~;
+		} ;
+		if ( a >= 1 ) { ; } ;
+		if ( a <= 1 ) { ; } ;
+		if ( a > 1 ) { ; } ;
+		while ( a < 5 ) {
+			a = a + 1;
+		} ;
+		for ( b = a; a != 10; ++2 ) {
+			f = a / b;
+		} ;
+		a = callfuncao funcao1 ( integer ; string ) ;
+		s = callfuncao funcao2;
+		a = a + b - d / ( c * a );
+		c1 = 'a';
+		c1 = '';
+		s = "";
+		s = "asdasd";
+	fim
+}

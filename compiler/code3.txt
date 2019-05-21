@@ -20,6 +20,6 @@ void main {
 		r = r * ( a / b );
 		cout << ~SOMA: ~ << soma;
 	}
-
+	;
 	fim
 }
