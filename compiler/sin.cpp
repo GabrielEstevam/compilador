@@ -34,11 +34,6 @@ void syntacticAnalysis(vector <token> entry) {
 	execStack.push_back(51);
 	printStack(execStack);
 	while(!execStack.empty() and ptrEntry < entry.size()) {
-		cout << entry[ptrEntry].id << "-" << execStack.back() << endl;
-		/*cout << "  Pilha: {$";
-		for (i = 0; i < execStack.size(); i++)
-			cout << ", " << execStack[i];
-		cout << "}" << endl;*/
 		if (entry[ptrEntry].id == execStack.back()) {
 			execStack.pop_back();
 			printToken(entry, ptrEntry, execStack);
@@ -51,7 +46,9 @@ void syntacticAnalysis(vector <token> entry) {
 					execStack.push_back(rules[Mx].second[i]);
 				printStack(execStack);
 			} else {
-				cout << "Erro Sintatico" << endl;
+				cout << "\033[1;31m" << "\nErro Sintatico." << "\033[0m" << " Linha: " << entry[ptrEntry].line << endl;
+				cout << "Nao esperado: " << entry[ptrEntry].content << endl;
+				cout << "ID do token esperado: " << execStack.back() << endl;
 				break;
 			}
 		}
@@ -60,142 +57,6 @@ void syntacticAnalysis(vector <token> entry) {
 
 map < pair<int, int>, int> initParseTable() {
 	map < pair<int, int>, int> parseTable;
-	/*parseTable[make_pair(51,2)] = 1;
-	parseTable[make_pair(52,2)] = 3;
-	parseTable[make_pair(52,3)] = 3;
-	parseTable[make_pair(52,7)] = 2;
-	parseTable[make_pair(52,13)] = 3;
-	parseTable[make_pair(52,15)] = 3;
-	parseTable[make_pair(52,19)] = 3;
-	parseTable[make_pair(52,26)] = 3;
-	parseTable[make_pair(52,47)] = 3;
-	parseTable[make_pair(53,2)] = 13;
-	parseTable[make_pair(53,3)] = 13;
-	parseTable[make_pair(53,13)] = 13;
-	parseTable[make_pair(53,15)] = 19;
-	parseTable[make_pair(53,19)] = 13;
-	parseTable[make_pair(53,26)] = 13;
-	parseTable[make_pair(54,15)] = 31;
-	parseTable[make_pair(55,41)] = 4;
-	parseTable[make_pair(55,43)] = 5;
-	parseTable[make_pair(56,3)] = 8;
-	parseTable[make_pair(56,13)] = 6;
-	parseTable[make_pair(56,19)] = 7;
-	parseTable[make_pair(56,26)] = 9;
-	parseTable[make_pair(57,2)] = 10;
-	parseTable[make_pair(57,3)] = 10;
-	parseTable[make_pair(57,7)] = 11;
-	parseTable[make_pair(57,13)] = 10;
-	parseTable[make_pair(57,15)] = 10;
-	parseTable[make_pair(57,19)] = 10;
-	parseTable[make_pair(57,26)] = 10;
-	parseTable[make_pair(57,47)] = 10;
-	parseTable[make_pair(59,7)] = 12;
-	parseTable[make_pair(60,2)] = 15;
-	parseTable[make_pair(60,3)] = 18;
-	parseTable[make_pair(60,13)] = 14;
-	parseTable[make_pair(60,19)] = 17;
-	parseTable[make_pair(60,26)] = 16;
-	parseTable[make_pair(61,39)] = 26;
-	parseTable[make_pair(61,46)] = 27;
-	parseTable[make_pair(62,3)] = 24;
-	parseTable[make_pair(62,5)] = 20;
-	parseTable[make_pair(62,6)] = 21;
-	parseTable[make_pair(62,8)] = 23;
-	parseTable[make_pair(62,9)] = 22;
-	parseTable[make_pair(62,45)] = 25;
-	parseTable[make_pair(63,3)] = 28;
-	parseTable[make_pair(63,13)] = 28;
-	parseTable[make_pair(63,19)] = 28;
-	parseTable[make_pair(63,26)] = 28;
-	parseTable[make_pair(64,40)] = 29;
-	parseTable[make_pair(64,45)] = 30;
-	parseTable[make_pair(65,1)] = 52;
-	parseTable[make_pair(65,5)] = 37;
-	parseTable[make_pair(65,6)] = 37;
-	parseTable[make_pair(65,7)] = 37;
-	parseTable[make_pair(65,8)] = 37;
-	parseTable[make_pair(65,10)] = 37;
-	parseTable[make_pair(65,16)] = 49;
-	parseTable[make_pair(65,18)] = 64;
-	parseTable[make_pair(65,23)] = 67;
-	parseTable[make_pair(65,24)] = 69;
-	parseTable[make_pair(65,25)] = 68;
-	parseTable[make_pair(65,27)] = 39;
-	parseTable[make_pair(65,38)] = 32; // append
-	parseTable[make_pair(65,40)] = 38;
-	parseTable[make_pair(65,46)] = 37;
-	//parseTable[make_pair(66,7)] = 33; // append
-	parseTable[make_pair(66,20)] = 32; // modify 33 -> 32
-	//parseTable[make_pair(66,24)] = 33; // append
-	//parseTable[make_pair(66,25)] = 33; // append
-	parseTable[make_pair(66,38)] = 33;
-	parseTable[make_pair(67,5)] = 75;
-	parseTable[make_pair(67,6)] = 75;
-	parseTable[make_pair(67,7)] = 75;
-	parseTable[make_pair(67,8)] = 75;
-	parseTable[make_pair(67,10)] = 75;
-	parseTable[make_pair(67,27)] = 76;
-	parseTable[make_pair(67,46)] = 75;
-	parseTable[make_pair(68,32)] = 40;
-	parseTable[make_pair(68,40)] = 40;
-	parseTable[make_pair(68,45)] = 40;
-	parseTable[make_pair(68,46)] = 41;
-	parseTable[make_pair(69,5)] = 44;
-	parseTable[make_pair(69,6)] = 46;
-	parseTable[make_pair(69,7)] = 48;
-	parseTable[make_pair(69,8)] = 47;
-	parseTable[make_pair(69,10)] = 45;
-	parseTable[make_pair(70,43)] = 43;
-	parseTable[make_pair(70,45)] = 42;
-	parseTable[make_pair(71,29)] = 56;
-	parseTable[make_pair(71,30)] = 55;
-	parseTable[make_pair(71,31)] = 53;
-	parseTable[make_pair(71,33)] = 58;
-	parseTable[make_pair(71,34)] = 57;
-	parseTable[make_pair(71,48)] = 54;
-	parseTable[make_pair(72,21)] = 50;
-	parseTable[make_pair(72,40)] = 51;
-	parseTable[make_pair(73,5)] = 59;
-	parseTable[make_pair(73,6)] = 60;
-	parseTable[make_pair(73,7)] = 63;
-	parseTable[make_pair(73,8)] = 62;
-	parseTable[make_pair(73,10)] = 61;
-	parseTable[make_pair(74,36)] = 65;
-	parseTable[make_pair(74,49)] = 66;
-	
-	parseTable[make_pair(75,34)] = 90; // modified 72 -> 71
-	parseTable[make_pair(83,7)] = 71; // append
-	parseTable[make_pair(83,12)] = 72; // append
-
-	parseTable[make_pair(75,40)] = 70;
-	parseTable[make_pair(76,34)] = 73;
-	parseTable[make_pair(76,40)] = 73;
-	parseTable[make_pair(76,43)] = 74;
-	parseTable[make_pair(79,5)] = 80;
-	parseTable[make_pair(79,6)] = 80;
-	parseTable[make_pair(79,7)] = 80;
-	parseTable[make_pair(79,8)] = 80;
-	parseTable[make_pair(79,10)] = 80;
-	parseTable[make_pair(79,46)] = 80;
-	parseTable[make_pair(80,32)] = 79;
-	parseTable[make_pair(80,37)] = 77;
-	parseTable[make_pair(80,40)] = 79;
-	parseTable[make_pair(80,45)] = 79;
-	parseTable[make_pair(80,50)] = 78;
-	parseTable[make_pair(81,5)] = 84;
-	parseTable[make_pair(81,6)] = 85;
-	parseTable[make_pair(81,7)] = 86;
-	parseTable[make_pair(81,8)] = 88;
-	parseTable[make_pair(81,10)] = 87;
-	parseTable[make_pair(81,46)] = 89;
-	parseTable[make_pair(82,32)] = 81;
-	parseTable[make_pair(82,37)] = 81;
-	parseTable[make_pair(82,40)] = 81;
-	parseTable[make_pair(82,42)] = 83;
-	parseTable[make_pair(82,44)] = 82;
-	parseTable[make_pair(82,45)] = 81;
-	parseTable[make_pair(82,50)] = 81;*/
 	parseTable[make_pair(51,2)] = 1;
 	parseTable[make_pair(52,2)] = 3;
 	parseTable[make_pair(52,3)] = 3;
