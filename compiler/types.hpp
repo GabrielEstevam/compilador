@@ -11,7 +11,10 @@
 
 using namespace std;
 
+#ifndef token
 struct token {
 	int id, line, column;
 	string content;
 };
+#endif
+
