@@ -2,22 +2,23 @@ void main {
 	a , b , c , d : integer ; s : string ; c1 , c2 , c3 : char ; f : float ;
 	integer funcao1 ( integer ; string ) {
 		r : integer ;
-		void funcao11 {
+		integer funcao11 {
 			inicio
 			;
 			fim
-			return ( r )
+			return ( 1 )
 		}
 		inicio
 			cin >> r;
 		fim
 		return ( r )
 	}
-	string funcao2 {
+	void funcao2 {
+		r : string ;
 		inicio
-			cadeia = "atribuicao"; /* erro semantico */
+			r = "atribuicao";
 		fim
-		return ( r )
+		return ( )
 	}
 	inicio
 		if ( a == b ) {

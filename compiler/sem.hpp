@@ -33,7 +33,7 @@ struct tableLine {
 };
 
 /* Only Public Function*/
-bool applyRule(int rule, string param); /* Return: 0 - Error Semantics, 1 - Non Error */
+bool applyRule(int rule, string param, int line); /* Return: 0 - Error Semantics, 1 - Non Error */
 
 /* Private Function definitions*/
 // auxiliar functions for table
@@ -50,16 +50,28 @@ bool removeInStackLevel();
 // semantics rules
 bool rule1();
 bool rule2(string param);
-bool rule3(string param);
+bool rule3(string param, int line);
 bool rule4();
 bool rule5();
 bool rule6();
 bool rule7();
-bool rule8(string param); // olhar
+bool rule8(string param, int line);
 bool rule9();
 bool rule10();
 bool rule11();
 bool rule12();
 bool rule13();
 bool rule14();
+bool rule15(int line);
+bool rule16(int line);
+bool rule17(string param, int line);
+bool rule18(int line);
+bool rule19(int line);
+bool rule20(int line);
+bool rule21(string param, int line);
+bool rule22();
+bool rule23();
+bool rule24();
+bool rule25(string param, int line);
+bool rule26(string param, int line);
 /* End private functions definitions*/
