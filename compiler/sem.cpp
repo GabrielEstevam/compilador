@@ -79,6 +79,20 @@ bool applyRule(int rule, string param, int line) {
 			return rule25(param, line);
 		case 26:
 			return rule26(param, line);
+		case 27:
+			return rule27(param, line);
+		case 28:
+			return rule28(line);
+		case 29:
+			return rule29(line);
+		case 30:
+			return rule30(param, line);
+		case 31:
+			return rule31(line);
+		case 32:
+			return rule32(line);
+		case 33:
+			return rule33(param, line);
 		default:
 			return 1;
 	}
@@ -377,5 +391,89 @@ bool rule26(string param, int line){
 		cout << "\033[1;31m" << "\nErro Semantico. Variável \'" <<param<< "\' não declarada! Linha: " << line << "\033[0m" << endl;
 		return 0;
 	}
+	return 1;
+}
+
+bool rule27(string param, int line){
+	int index_function = -1;
+	for (int i = 0; i < symbolsTable.size(); i++){
+		if (symbolsTable[i].level == stack_level.back() and symbolsTable[i].name == param and symbolsTable[i].category == FUNCTION)
+			index_function = i;
+	}
+	if (index_function == -1) {
+		cout << "\033[1;31m" << "\nErro Semantico. Função \'" <<param<< "\' não declarada! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	} 
+	if (symbolsTable[index_function].type != type) {
+		cout << "\033[1;31m" << "\nErro Semantico. Tipo de retorno incoerente! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	return 1;
+}
+
+bool rule28(int line) {
+	if (type != INTEGER) {
+		cout << "\033[1;31m" << "\nErro Semantico. Tipo incoerente com expressão! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	return 1;
+}
+
+bool rule29(int line) {
+	if (type != FLOAT) {
+		cout << "\033[1;31m" << "\nErro Semantico. Tipo incoerente com expressão! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	return 1;
+}
+
+bool rule30(string param, int line){
+	int index_variable = -1;
+	for (int i = 0; i < symbolsTable.size(); i++){
+		if (symbolsTable[i].level == stack_level.back() and symbolsTable[i].name == param and symbolsTable[i].category == VARIABLE){
+			index_variable = i;
+			break;
+		}
+	}
+	if (index_variable == -1) {
+		cout << "\033[1;31m" << "\nErro Semantico. Variável \'" <<param<< "\' não declarada! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	if (type != symbolsTable[index_variable].type) {
+		cout << "\033[1;31m" << "\nErro Semantico. Tipo incoerente com expressão! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	return 1;
+}
+
+bool rule31(int line) {
+	if (type != STRING) {
+		cout << "\033[1;31m" << "\nErro Semantico. Tipo incoerente com expressão! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	return 1;
+}
+
+bool rule32(int line) {
+	if (type != CHAR) {
+		cout << "\033[1;31m" << "\nErro Semantico. Tipo incoerente com expressão! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	return 1;
+}
+
+bool rule33(string param, int line){
+	int index_variable = -1;
+	for (int i = 0; i < symbolsTable.size(); i++){
+		if (symbolsTable[i].level == stack_level.back() and symbolsTable[i].name == param and symbolsTable[i].category == VARIABLE){
+			index_variable = i;
+			break;
+		}
+	}
+	if (index_variable == -1) {
+		cout << "\033[1;31m" << "\nErro Semantico. Variável \'" <<param<< "\' não declarada! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	type = symbolsTable[index_variable].type;
 	return 1;
 }

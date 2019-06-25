@@ -1,7 +1,7 @@
 void main {
 	a , b , c , d : integer ; s : string ; c1 , c2 , c3 : char ; f : float ;
-	integer funcao1 ( integer ; string ) {
-		r : integer ;
+	char funcao1 ( integer ; string ) {
+		r : integer;
 		integer funcao11 {
 			inicio
 			;
@@ -9,9 +9,10 @@ void main {
 			return ( 1 )
 		}
 		inicio
+			r = 5;
 			cin >> r;
 		fim
-		return ( r )
+		return ( 'a' )
 	}
 	void funcao2 {
 		r : string ;
@@ -21,12 +22,13 @@ void main {
 		return ( )
 	}
 	inicio
+		a = 1;
 		if ( a == b ) {
 			cout << ~iguais~ << ~ a e b ~ << a, b;
 		} else {
 			cout << ~diferentes~;
 		};
-		if ( a >= 1 ) { 
+		if ( a >= b ) { 
 			if ( a < 0 ) { 
 				a = b;
 			}; 
@@ -52,13 +54,13 @@ void main {
 			a = a + 1;
 		};
 		for ( b = a; a != 10; ++2 ) {
-			f = a / b;
+			c = a / b;
 		};
-		a = callfuncao funcao1 ( a , b );
-		s = callfuncao funcao2;
+		c1 = callfuncao funcao1 ( a , b );
+		callfuncao funcao2;
 		a = a + b - d / ( c * a );
 		c1 = 'a';
-		c1 = '';
+		c2 = '';
 		s = "";
 		s = "asdasd";
 	fim

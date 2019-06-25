@@ -74,4 +74,11 @@ bool rule23();
 bool rule24();
 bool rule25(string param, int line);
 bool rule26(string param, int line);
+bool rule27(string param, int line);
+bool rule28(int line);
+bool rule29(int line);
+bool rule30(string param, int line);
+bool rule31(int line);
+bool rule32(int line);
+bool rule33(string param, int line);
 /* End private functions definitions*/
