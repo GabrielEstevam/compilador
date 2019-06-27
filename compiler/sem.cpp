@@ -103,6 +103,16 @@ bool applyRule(int rule, string param, int line) {
 			return rule36();
 		case 37:
 			return rule37(line);
+		case 38:
+			return rule38(line);
+		case 39:
+			return rule39(line);
+		case 40:
+			return rule40(line);
+		case 41:
+			return rule41(line);
+		case 42:
+			return rule42(param, line);
 		default:
 			return 1;
 	}
@@ -111,7 +121,7 @@ bool applyRule(int rule, string param, int line) {
 void printEntireTable () {
 	cout << "\n == Symbols Table (Level, Name, Category, Type) ==" << endl;
 	for (int i = 0; i < symbolsTable.size(); i++)
-		cout << i <<": " << symbolsTable[i].level << " " << symbolsTable[i].name << " " << symbolsTable[i].category << " " << symbolsTable[i].type << endl;
+		cout << " " << i <<": " << symbolsTable[i].level << " " << symbolsTable[i].name << " " << symbolsTable[i].category << " " << symbolsTable[i].type << endl;
 }
 
 bool insertInTable (string level, string name, int category, int type) {
@@ -123,33 +133,26 @@ bool insertInTable (string level, string name, int category, int type) {
 	
 	symbolsTable.push_back(row);
 	cout << "\n == Inserting in Symbols Table ==" << endl;
-	cout << "Level, Name, Category, Type: " << row.level << " " << row.name << " " << row.category << " " << row.type << endl;
+	cout << " Level, Name, Category, Type: " << row.level << " " << row.name << " " << row.category << " " << row.type << endl;
 	return 1;
 }
 
 bool pushTypeFunctionParam (int index, int type) {
 	symbolsTable[index].param_type.push_back(type);
 	cout << "\n == Inserting (Param Function) in Symbols Table ==" << endl;
-	cout << "Level, Function, Type: " << symbolsTable[index].level << " " << symbolsTable[index].name << " " << type << endl;
+	cout << " Level, Function, Type: " << symbolsTable[index].level << " " << symbolsTable[index].name << " " << type << endl;
 	return 1;
 }
 
 bool insertInStackLevel(string level){
 	stack_level.push_back(level);
-	cout<<"Inserting in stack_level: "<< level<< endl;
+	cout << "\n == Inserting in stack_level == " << endl << " Level: " << level<< endl;
 	return 1;
-}
-
-bool queryInTopStackLevel(string level){
-	cout<<"Searching in stack_level: "<< level<< endl;
-	if(stack_level.back() == level)
-		return 1;
-	return 0;
 }
 
 bool removeInStackLevel(){
 	if(stack_level.size() > 0){
-		cout<<"Removing of stack_level: "<< stack_level.back()<< endl;
+		cout << "\n == Removing of stack_level == " << endl << " Level: " << stack_level.back()<< endl;
 		stack_level.pop_back();
 		return 1;
 	} 
@@ -532,11 +535,70 @@ bool rule37(int line) {
 }
 
 bool rule38(int line) {
-	if (symbolsTable[current_function].param_type.size() < count_param) {
+	if (symbolsTable[current_function].param_type.size() <= count_param) {
 		cout << "\033[1;31m" << "\nErro Semantico. Numero de parametros inconsistente com \'" << symbolsTable[current_function].name << "\'! Linha: " << line << "\033[0m" << endl;
 		return 0;
 	}
 	if (symbolsTable[current_function].param_type[count_param] != INTEGER) {
+		cout << "\033[1;31m" << "\nErro Semantico. Tipo do parametro inconsistente com \'" << symbolsTable[current_function].name << "\'! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	return 1;
+}
+
+bool rule39(int line) {
+	if (symbolsTable[current_function].param_type.size() <= count_param) {
+		cout << "\033[1;31m" << "\nErro Semantico. Numero de parametros inconsistente com \'" << symbolsTable[current_function].name << "\'! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	if (symbolsTable[current_function].param_type[count_param] != STRING) {
+		cout << "\033[1;31m" << "\nErro Semantico. Tipo do parametro inconsistente com \'" << symbolsTable[current_function].name << "\'! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	return 1;
+}
+
+bool rule40(int line) {
+	if (symbolsTable[current_function].param_type.size() <= count_param) {
+		cout << "\033[1;31m" << "\nErro Semantico. Numero de parametros inconsistente com \'" << symbolsTable[current_function].name << "\'! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	if (symbolsTable[current_function].param_type[count_param] != FLOAT) {
+		cout << "\033[1;31m" << "\nErro Semantico. Tipo do parametro inconsistente com \'" << symbolsTable[current_function].name << "\'! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	return 1;
+}
+
+bool rule41(int line) {
+	if (symbolsTable[current_function].param_type.size() <= count_param) {
+		cout << "\033[1;31m" << "\nErro Semantico. Numero de parametros inconsistente com \'" << symbolsTable[current_function].name << "\'! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	if (symbolsTable[current_function].param_type[count_param] != CHAR) {
+		cout << "\033[1;31m" << "\nErro Semantico. Tipo do parametro inconsistente com \'" << symbolsTable[current_function].name << "\'! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	return 1;
+}
+
+bool rule42(string param, int line){
+	int index_variable = -1;
+	for (int i = 0; i < symbolsTable.size(); i++){
+		if (symbolsTable[i].level == stack_level.back() and symbolsTable[i].name == param and symbolsTable[i].category == VARIABLE){
+			index_variable = i;
+			break;
+		}
+	}
+	if (index_variable == -1) {
+		cout << "\033[1;31m" << "\nErro Semantico. Variável \'" <<param<< "\' não declarada! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	if (symbolsTable[current_function].param_type.size() <= count_param) {
+		cout << "\033[1;31m" << "\nErro Semantico. Numero de parametros inconsistente com \'" << symbolsTable[current_function].name << "\'! Linha: " << line << "\033[0m" << endl;
+		return 0;
+	}
+	if (symbolsTable[current_function].param_type[count_param] != symbolsTable[index_variable].type) {
 		cout << "\033[1;31m" << "\nErro Semantico. Tipo do parametro inconsistente com \'" << symbolsTable[current_function].name << "\'! Linha: " << line << "\033[0m" << endl;
 		return 0;
 	}

@@ -44,7 +44,6 @@ bool pushTypeFunctionParam (int index, int type);
 
 // auxiliar functions for stacklevel
 bool insertInStackLevel(string level);
-bool queryInTopStackLevel(string level);
 bool removeInStackLevel();
 
 // semantics rules
@@ -85,4 +84,9 @@ bool rule34();
 bool rule35(int line);
 bool rule36();
 bool rule37(int line);
+bool rule38(int line);
+bool rule39(int line);
+bool rule40(int line);
+bool rule41(int line);
+bool rule42(string param, int line);
 /* End private functions definitions*/

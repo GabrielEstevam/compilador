@@ -14,10 +14,16 @@ void main {
 		fim
 		return ( r )
 	}
-	void funcao2 ( float ){
+	void funcao2 ( float ; string ; integer ; char ) {
 		r : string ;
 		inicio
 			r = "atribuicao";
+		fim
+		return ( )
+	}
+	void funcao3 {
+		inicio
+		;
 		fim
 		return ( )
 	}
@@ -56,8 +62,9 @@ void main {
 		for ( b = a; a != 10; ++2 ) {
 			c = a / b;
 		};
-		a = callfuncao funcao1 ( a , b );
-		callfuncao funcao2 ( c );
+		a = callfuncao funcao1 ( 1 , "oi" );
+		callfuncao funcao2 ( f , "oi" , a , 'a' );
+		callfuncao funcao3;
 		a = a + b - d / ( c * a );
 		c1 = 'a';
 		c2 = '';
