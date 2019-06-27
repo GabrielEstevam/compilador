@@ -30,6 +30,7 @@ struct tableLine {
 	string name;
 	int category;
 	int type;
+	vector <int> param_type;
 };
 
 /* Only Public Function*/
@@ -39,8 +40,7 @@ bool applyRule(int rule, string param, int line); /* Return: 0 - Error Semantics
 // auxiliar functions for table
 void printEntireTable();
 bool insertInTable(string level, string name, int category, int type);
-bool queryInTable(string level, string name, int category, int type);
-bool revomeInTable();
+bool pushTypeFunctionParam (int index, int type);
 
 // auxiliar functions for stacklevel
 bool insertInStackLevel(string level);
@@ -81,4 +81,8 @@ bool rule30(string param, int line);
 bool rule31(int line);
 bool rule32(int line);
 bool rule33(string param, int line);
+bool rule34();
+bool rule35(int line);
+bool rule36();
+bool rule37(int line);
 /* End private functions definitions*/

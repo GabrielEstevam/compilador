@@ -244,10 +244,10 @@ map < int, rule > createRules() {
 	rules[37] = newRule(make_pair(65, 0), vector< pair <int, int> > {make_pair(67, 0), make_pair(32, 0), make_pair(67, 0)});
 	rules[38] = newRule(make_pair(65, 0), vector< pair <int, int> > {});
 	rules[39] = newRule(make_pair(65, 24), vector< pair <int, int> > {make_pair(27, 0), make_pair(7, 25), make_pair(68, 0)});
-	rules[40] = newRule(make_pair(68, 0), vector< pair <int, int> > {});
-	rules[41] = newRule(make_pair(68, 0), vector< pair <int, int> > {make_pair(46, 0), make_pair(69, 0), make_pair(70, 0), make_pair(45, 0)});
+	rules[40] = newRule(make_pair(68, 37), vector< pair <int, int> > {});
+	rules[41] = newRule(make_pair(68, 0), vector< pair <int, int> > {make_pair(46, 34), make_pair(69, 0), make_pair(70, 0), make_pair(45, 35)});
 	rules[42] = newRule(make_pair(70, 0), vector< pair <int, int> > {});
-	rules[43] = newRule(make_pair(70, 0), vector< pair <int, int> > {make_pair(43, 0), make_pair(69, 0), make_pair(70, 0)});
+	rules[43] = newRule(make_pair(70, 0), vector< pair <int, int> > {make_pair(43, 36), make_pair(69, 0), make_pair(70, 0)});
 	rules[44] = newRule(make_pair(69, 0), vector< pair <int, int> > {make_pair(5, 0)});
 	rules[45] = newRule(make_pair(69, 0), vector< pair <int, int> > {make_pair(10, 0)});
 	rules[46] = newRule(make_pair(69, 0), vector< pair <int, int> > {make_pair(6, 0)});

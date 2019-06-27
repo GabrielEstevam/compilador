@@ -1,8 +1,8 @@
 void main {
 	a , b , c , d : integer ; s : string ; c1 , c2 , c3 : char ; f : float ;
-	char funcao1 ( integer ; string ) {
+	integer funcao1 ( integer ; string ) {
 		r : integer;
-		integer funcao11 {
+		integer funcao11 ( char ) {
 			inicio
 			;
 			fim
@@ -12,9 +12,9 @@ void main {
 			r = 5;
 			cin >> r;
 		fim
-		return ( 'a' )
+		return ( r )
 	}
-	void funcao2 {
+	void funcao2 ( float ){
 		r : string ;
 		inicio
 			r = "atribuicao";
@@ -56,8 +56,8 @@ void main {
 		for ( b = a; a != 10; ++2 ) {
 			c = a / b;
 		};
-		c1 = callfuncao funcao1 ( a , b );
-		callfuncao funcao2;
+		a = callfuncao funcao1 ( a , b );
+		callfuncao funcao2 ( c );
 		a = a + b - d / ( c * a );
 		c1 = 'a';
 		c2 = '';
