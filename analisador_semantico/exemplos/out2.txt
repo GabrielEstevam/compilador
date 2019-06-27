@@ -1,0 +1,46 @@
+File: exemplos/code2.txt
+
+ == Inserting in stack_level == 
+ Level: main
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main inpt1 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main inpt2 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main outp 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main  1 1
+
+ == Inserting in stack_level == 
+ Level: soma
+
+ == Inserting (Param Function) in Symbols Table ==
+ Level, Function, Type: main soma 1
+
+ == Inserting (Param Function) in Symbols Table ==
+ Level, Function, Type: main soma 1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: soma a 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: soma b 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: soma resultado 0 -1
+
+ == Removing of stack_level == 
+ Level: soma
+
+ == Symbols Table (Level, Name, Category, Type) ==
+ 0: main inpt1 0 1
+ 1: main inpt2 0 1
+ 2: main outp 0 1
+ 3: main soma 1 1
+ 4: soma a 0 1
+ 5: soma b 0 1
+ 6: soma resultado 0 1

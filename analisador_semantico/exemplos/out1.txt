@@ -1,0 +1,106 @@
+File: exemplos/code1.txt
+
+ == Inserting in stack_level == 
+ Level: main
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main a 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main b 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main c 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main d 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main s 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main c1 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main c2 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main c3 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main f 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main  1 1
+
+ == Inserting in stack_level == 
+ Level: funcao1
+
+ == Inserting (Param Function) in Symbols Table ==
+ Level, Function, Type: main funcao1 1
+
+ == Inserting (Param Function) in Symbols Table ==
+ Level, Function, Type: main funcao1 4
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: funcao1 r 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: funcao1  1 0
+
+ == Inserting in stack_level == 
+ Level: funcao11
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: funcao11 a 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: funcao11 b 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: funcao11 x 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: funcao11 y 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: funcao11 r 0 -1
+
+ == Removing of stack_level == 
+ Level: funcao11
+
+ == Removing of stack_level == 
+ Level: funcao1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main  1 4
+
+ == Inserting in stack_level == 
+ Level: funcao2
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: funcao2 cadeia 0 -1
+
+ == Removing of stack_level == 
+ Level: funcao2
+
+ == Symbols Table (Level, Name, Category, Type) ==
+ 0: main a 0 1
+ 1: main b 0 1
+ 2: main c 0 1
+ 3: main d 0 1
+ 4: main s 0 4
+ 5: main c1 0 3
+ 6: main c2 0 3
+ 7: main c3 0 3
+ 8: main f 0 2
+ 9: main funcao1 1 1
+ 10: funcao1 r 0 1
+ 11: funcao1 funcao11 1 0
+ 12: funcao11 a 0 1
+ 13: funcao11 b 0 1
+ 14: funcao11 x 0 1
+ 15: funcao11 y 0 1
+ 16: funcao11 r 0 1
+ 17: main funcao2 1 4
+ 18: funcao2 cadeia 0 4

@@ -1,0 +1,30 @@
+File: exemplos/code3.txt
+
+ == Inserting in stack_level == 
+ Level: main
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main n 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main i 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main a 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main b 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main r 0 -1
+
+ == Inserting in Symbols Table ==
+ Level, Name, Category, Type: main soma 0 -1
+
+ == Symbols Table (Level, Name, Category, Type) ==
+ 0: main n 0 1
+ 1: main i 0 1
+ 2: main a 0 2
+ 3: main b 0 2
+ 4: main r 0 2
+ 5: main soma 0 2
