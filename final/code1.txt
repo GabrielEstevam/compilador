@@ -1,0 +1,64 @@
+void main {
+	a , b , c , d : integer ; s : string ; c1 , c2 , c3 : char ; f : float; 
+	integer funcao1 ( integer ; string ) {
+		r : integer ;
+		void funcao11 {
+			inicio
+				r = ( a / b + 3 ) * ( ( x + y ) / 2 );
+			fim
+			return ( r )
+		}
+		inicio
+			cin >> r;
+		fim
+		return ( )
+	}
+	string funcao2 {
+		inicio
+			cadeia = "atribuicao"; /* erro semantico */
+		fim
+		return ( r )
+	}
+	inicio
+		if ( a == b ) {
+			cout << ~iguais~ << ~ a e b ~ << a, b;
+		} else {
+			cout << ~diferentes~;
+		};
+		if ( a >= 1 ) { 
+			if ( a < 0 ) { 
+				a = b;
+			}; 
+		};
+		if ( a >= 1 ) { 
+			if ( a < 0 ) { 
+				a = b;
+			}; 
+		} else {
+			a = 1;
+		};
+		if ( a >= 1 ) { 
+			if ( a < 0 ) { 
+				a = b;
+			} else {
+				a = 2;
+			}; 
+		};
+		do {	
+			cout << ~Saida: ~;
+		} while ( a > b );
+		while ( a < 5 ) {
+			a = a + 1;
+		};
+		for ( b = a; a != 10; ++2 ) {
+			f = a / b;
+		};
+		a = callfuncao funcao1 ( a , b );
+		s = callfuncao funcao2;
+		a = a + b - d / ( c * a );
+		c1 = 'a';
+		c1 = '';
+		s = "";
+		s = "asdasd";
+	fim
+}
